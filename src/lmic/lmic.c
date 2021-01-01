@@ -916,8 +916,9 @@ scan_mac_cmds(
         switch( cmd ) {
         case MCMD_LinkCheckAns: {
             // TODO(tmm@mcci.com) capture these, reliably..
-            //int gwmargin = opts[oidx+1];
-            //int ngws = opts[oidx+2];
+            LMIC.gwMargin = opts[oidx+1];
+            LMIC.nGws = opts[oidx+2];
+            LMIC.lchkReq = 0;
             break;
         }
         // from 1.0.3 spec section 5.2:
