@@ -1241,16 +1241,16 @@ function uflt12f(rawUflt12)
 - v3.3.0 is primarily a maintenance and roll-up release.
 
    - Added [LoRaWAN-at-a-glance](doc/LoRaWAN-at-a-glance.pdf) and a [state diagram of the LMIC](doc/LMIC-FSM.pdf).
-   - Several PRs from Matthijs Kooijman to improve compatibility with the original Arduino LMIC ([#608](https://github.com/mcci-catena/arduino-lmic/issue/608), [#609](https://github.com/mcci-catena/arduino-lmic/issue/609)).
-   - Numerous documentation improvements contributed by the community ([#431](https://github.com/mcci-catena/arduino-lmic/issue/), [#612](https://github.com/mcci-catena/arduino-lmic/issue/612), [#614](https://github.com/mcci-catena/arduino-lmic/issue/614), [#625](https://github.com/mcci-catena/arduino-lmic/issue/625)).
+   - Several PRs from Matthijs Kooijman to improve compatibility with the original Arduino LMIC ([#608](https://github.com/mcci-catena/arduino-lmic/issues/608), [#609](https://github.com/mcci-catena/arduino-lmic/issues/609)).
+   - Numerous documentation improvements contributed by the community ([#431](https://github.com/mcci-catena/arduino-lmic/issues/431), [#612](https://github.com/mcci-catena/arduino-lmic/issues/612), [#614](https://github.com/mcci-catena/arduino-lmic/issues/614), [#625](https://github.com/mcci-catena/arduino-lmic/issues/625)).
 
 - v3.2.0 has the following changes:
 
-  - [#550](https://github.com/mcci-catena/arduino-lmic/issue/550) fixes debug prints in `ttn-otaa.ino`.
-  - [#553](https://github.com/mcci-catena/arduino-lmic/issue/553) add full regional support to `raw.ino` and `ttn-abp.ino`.
-  - [#570](https://github.com/mcci-catena/arduino-lmic/issue/570) corrects handling of piggy-back MAC responses when sending an `LMIC_sendAlive()` (`OPMODE_POLL`) message.
-  - [#524](https://github.com/mcci-catena/arduino-lmic/issue/524) corrects handling of interrupt disable, and slightly refactors the low-level interrupt handling wrappers for clarity. With this change, `radio_irq_handler_v2()` is never called except from the run loop, and so the radio driver need not (and does not) disable interrupts. Version is v3.1.0.20.
-  - [#568](https://github.com/mcci-catena/arduino-lmic/issue/568) improves documentation for the radio driver.
+  - [#550](https://github.com/mcci-catena/arduino-lmic/issues/550) fixes debug prints in `ttn-otaa.ino`.
+  - [#553](https://github.com/mcci-catena/arduino-lmic/issues/553) add full regional support to `raw.ino` and `ttn-abp.ino`.
+  - [#570](https://github.com/mcci-catena/arduino-lmic/issues/570) corrects handling of piggy-back MAC responses when sending an `LMIC_sendAlive()` (`OPMODE_POLL`) message.
+  - [#524](https://github.com/mcci-catena/arduino-lmic/issues/524) corrects handling of interrupt disable, and slightly refactors the low-level interrupt handling wrappers for clarity. With this change, `radio_irq_handler_v2()` is never called except from the run loop, and so the radio driver need not (and does not) disable interrupts. Version is v3.1.0.20.
+  - [#568](https://github.com/mcci-catena/arduino-lmic/issues/568) improves documentation for the radio driver.
   - [#537](https://github.com/mcci-catena/arduino-lmic/pull/537) fixes a compile error in SX1272 support. (Thanks @ricaun.) Version is v3.1.0.10.
 
 - v3.1.0 officially adopts the changes from v3.0.99. There were dozens of changes; check the GitHub issue logs and change logs. This was a breaking release (due to changes in data layout in the LMIC structure; the structure is accessed by apps).
