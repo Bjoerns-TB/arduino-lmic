@@ -918,6 +918,9 @@ scan_mac_cmds(
             // TODO(tmm@mcci.com) capture these, reliably..
             //int gwmargin = opts[oidx+1];
             //int ngws = opts[oidx+2];
+	    LMIC.gwMargin = opts[oidx+1];
+            LMIC.nGws = opts[oidx+2];
+            LMIC.lchkReq = 0;
             break;
         }
         // from 1.0.3 spec section 5.2:
@@ -1928,6 +1931,11 @@ static bit_t buildDataFrame (void) {
         LMICOS_logEventUint32("piggyback mac opts too long", end);
         return 0;
     }
+	
+    if( LMIC.lchkReq ) {  // Ask for a link check request (gateway's margin + gateway number)
+        LMIC.frame[end+0] = MCMD_LinkCheckReq;
+        end += 1;
+    }
 
     if( LMIC.adrChanged ) {
         // if ADR is enabled, and we were just counting down the
@@ -2796,6 +2804,9 @@ void LMIC_reset (void) {
     LMIC.adrEnabled   =  FCT_ADREN;
     resetJoinParams();
     LMIC.rxDelay      =  DELAY_DNW1;
+    LMIC.lchkReq      = 0;
+    LMIC.gwMargin     = 0;
+    LMIC.nGws         = 0;
     // LMIC.pendMacLen  =  0;
     // LMIC.pendMacPiggyback = 0;
     // LMIC.dn2Ans       = 0;
@@ -3043,6 +3054,13 @@ void LMIC_setLinkCheckMode (bit_t enabled) {
 // so e.g. for a +/-1% error you would pass MAX_CLOCK_ERROR * 1 / 100.
 void LMIC_setClockError(u2_t error) {
     LMIC.client.clockError = error;
+}
+
+// Linkcheckreq
+// Ask for a link check request on next frame UP.
+// It will ask the network for gateway's margin and the number of gateways
+void LMIC_setLinkCheckRequestOnce (bit_t enabled) {
+    LMIC.lchkReq = 1;
 }
 
 // \brief return the uplink sequence number for the next transmission.
