@@ -629,6 +629,9 @@ struct lmic_t {
     s1_t        devAnsMargin; // SNR value between -32 and 31 (inclusive) for the last successfully received DevStatusReq command
     u1_t        adrEnabled;
     u1_t        moreData;     // NWK has more data pending
+    bit_t       lchkReq;      // Send lCheckReq MAC command
+    u1_t        gwMargin;     // Gateway margin    (lcheckAns)
+    u1_t        nGws;         // Number of gateways (lcheckAns)
 #if LMIC_ENABLE_TxParamSetupReq
     u1_t        txParam;        // the saved TX param byte.
 #endif
@@ -724,6 +727,7 @@ void  LMIC_setPingable   (u1_t intvExp);
 void LMIC_setSession (u4_t netid, devaddr_t devaddr, xref2u1_t nwkKey, xref2u1_t artKey);
 void LMIC_setLinkCheckMode (bit_t enabled);
 void LMIC_setClockError(u2_t error);
+void LMIC_setLinkCheckRequestOnce (bit_t enabled);
 
 u4_t LMIC_getSeqnoUp    (void);
 u4_t LMIC_setSeqnoUp    (u4_t);
