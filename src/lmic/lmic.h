@@ -105,8 +105,8 @@ extern "C"{
 #define ARDUINO_LMIC_VERSION_CALC(major, minor, patch, local)	\
 	((((major)*UINT32_C(1)) << 24) | (((minor)*UINT32_C(1)) << 16) | (((patch)*UINT32_C(1)) << 8) | (((local)*UINT32_C(1)) << 0))
 
-#define	ARDUINO_LMIC_VERSION	ARDUINO_LMIC_VERSION_CALC(3, 99, 0, 2)
-                                                        /* 3.99.0-1 */
+#define	ARDUINO_LMIC_VERSION    \
+    ARDUINO_LMIC_VERSION_CALC(4, 0, 0, 0)  /* 4.0.0 */
 
 #define	ARDUINO_LMIC_VERSION_GET_MAJOR(v)	\
 	((((v)*UINT32_C(1)) >> 24u) & 0xFFu)
@@ -689,8 +689,11 @@ bit_t LMIC_enableChannel(u1_t channel);
 bit_t LMIC_disableSubBand(u1_t band);
 bit_t LMIC_selectSubBand(u1_t band);
 
-//! \brief get the number of (fixed) default channels before the progammable channels.
+//! \brief get the number of (fixed) default channels before the programmable channels.
 u1_t  LMIC_queryNumDefaultChannels(void);
+
+//! \brief check whether the LMIC is ready for a transmit packet
+bit_t LMIC_queryTxReady(void);
 
 void  LMIC_setDrTxpow   (dr_t dr, s1_t txpow);  // set default/start DR/txpow
 void  LMIC_setAdrMode   (bit_t enabled);        // set ADR mode (if mobile turn off)

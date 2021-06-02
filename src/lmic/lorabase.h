@@ -445,6 +445,13 @@ enum {
     LEN_JA          = 17,
     LEN_JAEXT       = 17+16
 };
+
+enum {
+    // JoinAccept CFList types
+    LORAWAN_JoinAccept_CFListType_FREQUENCIES = 0,  ///< the CFList contains 5 frequencies
+    LORAWAN_JoinAccept_CFListType_MASK = 1,         ///< the CFList contains channel-mask data
+};
+
 enum {
     // Data frame format
     OFF_DAT_HDR      = 0,

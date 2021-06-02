@@ -227,6 +227,27 @@ ostime_t LMICeulike_nextJoinState(uint8_t nDefaultChannels) {
 }
 #endif // !DISABLE_JOIN
 
+#if !defined(DISABLE_JOIN)
+void LMICeulike_processJoinAcceptCFList(void) {
+    if ( LMICbandplan_hasJoinCFlist() &&
+         LMIC.frame[OFF_CFLIST + 15] == LORAWAN_JoinAccept_CFListType_FREQUENCIES) {
+        u1_t dlen;
+        u1_t nDefault = LMIC_queryNumDefaultChannels();
+
+        dlen = OFF_CFLIST;
+        for( u1_t chidx = nDefault; chidx < nDefault + 5; chidx++, dlen+=3 ) {
+            u4_t freq = LMICbandplan_convFreq(&LMIC.frame[dlen]);
+            if( freq ) {
+                LMIC_setupChannel(chidx, freq, 0, -1);
+#if LMIC_DEBUG_LEVEL > 1
+                LMIC_DEBUG_PRINTF("%"LMIC_PRId_ostime_t": Setup channel, idx=%d, freq=%"PRIu32"\n", os_getTime(), chidx, freq);
+#endif
+            }
+        }
+    }
+}
+#endif // !DISABLE_JOIN
+
 void LMICeulike_saveAdrState(lmic_saved_adr_state_t *pStateBuffer) {
     os_copyMem(
             pStateBuffer->channelFreq,

@@ -170,6 +170,10 @@
 # error "LMICbandplan_validDR() not defined by bandplan"
 #endif
 
+#if !defined(LMICbandplan_processJoinAcceptCFList)
+# error "LMICbandplan_processJoinAcceptCFList() not defined by bandplan"
+#endif
+
 //
 // Things common to lmic.c code
 //

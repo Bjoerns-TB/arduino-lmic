@@ -315,6 +315,32 @@ ostime_t LMICuslike_nextJoinState(void) {
 }
 #endif
 
+#if !defined(DISABLE_JOIN)
+void LMICuslike_processJoinAcceptCFList(void) {
+    if ( LMICbandplan_hasJoinCFlist() &&
+         LMIC.frame[OFF_CFLIST + 15] == LORAWAN_JoinAccept_CFListType_MASK ) {
+        u1_t dlen;
+
+        dlen = OFF_CFLIST;
+        for( u1_t chidx = 0; chidx < 8 * sizeof(LMIC.channelMap); chidx += 16, dlen += 2 ) {
+            u2_t mask = os_rlsbf2(&LMIC.frame[dlen]);
+#if LMIC_DEBUG_LEVEL > 1
+            LMIC_DEBUG_PRINTF("%"LMIC_PRId_ostime_t": Setup channel mask, group=%u, mask=%04x\n", os_getTime(), chidx, mask);
+#endif
+            for ( u1_t chnum = chidx; chnum < chidx + 16; ++chnum, mask >>= 1) {
+                if (chnum >= 72) {
+                    break;
+                } else if (mask & 1) {
+                    LMIC_enableChannel(chnum);
+                } else {
+                    LMIC_disableChannel(chnum);
+                }
+            }
+        }
+    }
+}
+#endif // !DISABLE_JOIN
+
 void LMICuslike_saveAdrState(lmic_saved_adr_state_t *pStateBuffer) {
         os_copyMem(
                 pStateBuffer->channelMap,
